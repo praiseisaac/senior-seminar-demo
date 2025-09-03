@@ -252,5 +252,3 @@ Optional nice-to-haves (easy follow-ups in Cursor)
 	•	Add a `/peers` command that loads a local `peers.json` the student maintains.
 	•	Add `--json` flag to the one-off send so CI can parse success/failure cleanly.
 	•	Add exponential backoff retries to sendMessage for flaky Wi-Fi.
-
-If you want, I can also drop a CI workflow that does a loopback test on PRs (starts the listener on the runner and sends to 127.0.0.1) so students see a green check when their code can both receive and send.
