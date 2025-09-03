@@ -2,12 +2,13 @@
 package.json
 ```json
 {
-  "name": "peer-ping-bun",
+  "name": "peer-ping-npm",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "peer": "bun run src/peer.ts",
-    "send": "bun run src/peer.ts --send"
+  "build": "tsc",
+  "peer": "npm run build && node ./dist/peer.js",
+  "send": "npm run build && node ./dist/peer.js --send"
   },
   "devDependencies": {
     "@types/node": "^22.5.0",
@@ -33,16 +34,16 @@ tsconfig.json
 
 src/peer.ts
 ```typescript
-// Peer-to-peer TCP messenger (Bun + TypeScript + Node 'net').
+// Peer-to-peer TCP messenger (TypeScript + Node 'net').
 // - Starts a local TCP server so you can RECEIVE messages.
 // - Provides a REPL so you can SEND messages to classmates.
 // Protocol: NDJSON (one JSON per line)
 //
 // Usage (run your listener + REPL):a
-//   bun run src/peer.ts --name "Alice" --port 5050
+//   npm run peer -- --name "Alice" --port 5050
 //
 // Send one-off (no REPL, good for scripting):
-//   bun run src/peer.ts --send --name "Alice" --to 10.0.0.42 --port 5050 --text "Hello!"
+//   npm run send -- --name "Alice" --to 10.0.0.42 --port 5050 --text "Hello!"
 //
 // In the REPL, type:
 //   /send 10.0.0.42 Hello from Alice!
@@ -153,7 +154,7 @@ function startServer(port: number) {
 // --- One-off send mode (no REPL) ---
 if (SEND_MODE) {
   if (!TO || !TEXT) {
-    console.error("Usage: bun run src/peer.ts --send --name <you> --to <peer_ip> --port <peer_port> --text <msg>");
+    console.error("Usage: npm run send -- --name <you> --to <peer_ip> --port <peer_port> --text <msg>");
     process.exit(1);
   }
   sendMessage({ host: TO, port: PORT, from: NAME, text: TEXT }).then((ack) => {
@@ -215,8 +216,8 @@ if (SEND_MODE) {
 How students use it
 	1.	Start your peer (receive + REPL)
 ```bash
-bun install
-bun run src/peer.ts --name "Your Name" --port 5050
+npm install
+npm run peer -- --name "Your Name" --port 5050
 ```
 
 	•	Leave this running. It prints any incoming messages.
@@ -228,7 +229,7 @@ bun run src/peer.ts --name "Your Name" --port 5050
 
 	2.	Or one-off send (script/CI friendly)
 ```bash
-bun run src/peer.ts --send --name "Your Name" --to 10.0.0.42 --port 5050 --text "Hello!"
+npm run send -- --name "Your Name" --to 10.0.0.42 --port 5050 --text "Hello!"
 ```
 
 	3.	GitHub step
