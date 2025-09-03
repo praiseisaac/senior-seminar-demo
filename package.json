@@ -1,0 +1,19 @@
+{
+  "name": "peer-ping-node",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "peer": "ts-node src/peer.ts",
+    "send": "ts-node src/peer.ts --send",
+    "build": "tsc",
+    "start": "node dist/peer.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.6.0"
+  },
+  "dependencies": {
+    "tsx": "^4.20.5"
+  }
+}
